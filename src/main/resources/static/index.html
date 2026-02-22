@@ -428,6 +428,197 @@
       .main { padding: 20px 18px; }
     }
 
+    /* ── Search bar ── */
+    .search-wrap {
+      display: flex; align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-wrap:focus-within {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      width: 15px; height: 15px;
+      color: var(--text-dim);
+      margin: 0 10px 0 12px;
+      flex-shrink: 0;
+    }
+    .search-input {
+      background: transparent;
+      border: none; outline: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem; color: var(--text);
+      padding: 9px 8px 9px 0;
+      width: 160px;
+    }
+    .search-input::placeholder { color: var(--text-dim); }
+    .search-input::-webkit-inner-spin-button,
+    .search-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .search-btn {
+      background: var(--surface2);
+      border: none; border-left: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      padding: 9px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+    .search-btn:hover { background: var(--accent); color: #0a0d13; }
+
+    /* ── Patient Analytics Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid rgba(99,179,237,0.2);
+      border-radius: 16px;
+      width: 100%; max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,179,237,0.05);
+      transform: translateY(16px);
+      transition: transform 0.25s ease;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      position: sticky; top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .modal-patient-info { display: flex; align-items: center; gap: 14px; }
+    .modal-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #805ad5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .modal-patient-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem; line-height: 1;
+    }
+    .modal-patient-meta {
+      font-size: 0.72rem; color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      margin-top: 5px;
+      display: flex; gap: 12px;
+    }
+    .modal-close {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text-muted); width: 32px; height: 32px;
+      border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; line-height: 1;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .modal-close:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+    .modal-body { padding: 24px 28px; display: flex; flex-direction: column; gap: 24px; }
+
+    /* Metric cards inside modal */
+    .modal-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .metric-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+    .metric-label { font-size: 0.62rem; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); margin-bottom: 8px; }
+    .metric-value { font-size: 1.7rem; font-weight: 600; line-height: 1; }
+    .metric-value.accent { color: var(--accent); }
+    .metric-value.danger { color: var(--danger); }
+    .metric-value.warn { color: var(--warn); }
+    .metric-value.safe { color: var(--safe); }
+    .metric-unit { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Glucose chart */
+    .chart-area {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+    }
+    .chart-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-family: 'DM Mono', monospace; margin-bottom: 14px; }
+    .chart-svg-wrap { width: 100%; overflow: hidden; }
+    .chart-svg-wrap svg { width: 100%; height: 140px; }
+
+    /* AI insight panel in modal */
+    .modal-ai-panel {
+      background: rgba(99,179,237,0.05);
+      border: 1px solid rgba(99,179,237,0.18);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+    }
+    .modal-ai-label {
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--accent); font-family: 'DM Mono', monospace;
+      display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
+    }
+    .modal-ai-label::before {
+      content: ''; display: inline-block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .modal-ai-text { font-size: 0.87rem; line-height: 1.6; color: var(--text); }
+    .modal-ai-prediction {
+      margin-top: 12px;
+      display: flex; align-items: center; gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(99,179,237,0.12);
+    }
+    .modal-ai-prediction-label { font-size: 0.72rem; color: var(--text-muted); }
+    .modal-ai-prediction-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem; font-weight: 600; color: var(--accent);
+    }
+
+    /* Modal loading state */
+    .modal-loading {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; padding: 48px 28px;
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .modal-loading-text { color: var(--text-muted); font-size: 0.85rem; font-family: 'DM Mono', monospace; }
+
+    /* Modal error state */
+    .modal-error {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 48px 28px; text-align: center;
+    }
+    .modal-error-icon { font-size: 2rem; }
+    .modal-error-title { font-size: 1rem; font-weight: 600; color: var(--danger); }
+    .modal-error-msg { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
     /* Subtle entrance animations */
     .stat-card { animation: fadeUp 0.4s ease both; }
     .stat-card:nth-child(1) { animation-delay: 0.05s; }
@@ -508,6 +699,11 @@
         <div class="page-subtitle" id="current-time">Loading...</div>
       </div>
       <div class="topbar-right">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-input" id="patient-id-search" type="number" min="1" placeholder="Search patient ID…" onkeydown="if(event.key==='Enter') lookupPatient()" />
+          <button class="search-btn" onclick="lookupPatient()">View Analytics</button>
+        </div>
         <button class="btn btn-ghost" onclick="refreshAll()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
           Refresh
@@ -725,6 +921,15 @@
   </main>
 </div>
 
+<!-- ── Patient Analytics Modal ── -->
+<div class="modal-overlay" id="patient-modal" onclick="if(event.target===this) closeModal()">
+  <div class="modal" id="modal-inner">
+    <div id="modal-content">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
 <!-- Toast container -->
 <div class="toast-area" id="toast-area"></div>
 
@@ -877,7 +1082,7 @@
         ? p.riskAssessment : '';
       const hba1c = p.hba1c != null ? `${p.hba1c}%` : '<span style="color:var(--text-dim)">—</span>';
 
-      return `<tr>
+      return `<tr style="cursor:pointer" onclick="openPatientFromRow(${p.id})" title="Click to view analytics for ${p.patientName}">
         <td>
           <div class="patient-cell">
             <div class="patient-avatar">${initials(p.patientName)}</div>
@@ -907,7 +1112,7 @@
 
     tbody.innerHTML = hypertensionPatients.map(p => {
       const [catClass, catLabel] = bpCategory(p.systolic, p.diastolic);
-      return `<tr>
+      return `<tr style="cursor:pointer" onclick="openPatientFromRow(${p.id})" title="Click to view analytics for ${p.patientName}">
         <td>
           <div class="patient-cell">
             <div class="patient-avatar">${initials(p.patientName)}</div>
@@ -1110,6 +1315,318 @@
     renderDiabetesTable();
     updateStats();
     toast('Data refreshed', 'success');
+  }
+
+  // ── Patient Lookup & Analytics Modal ─────────────────────────────────
+  function openModal() {
+    document.getElementById('patient-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('patient-modal').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('patient-id-search').value = '';
+  }
+
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+  async function lookupPatient() {
+    const idVal = document.getElementById('patient-id-search').value.trim();
+    if (!idVal) { toast('Enter a patient ID to search.', 'error'); return; }
+    const id = parseInt(idVal);
+    if (isNaN(id) || id < 1) { toast('Please enter a valid numeric ID.', 'error'); return; }
+
+    // Show loading state
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-loading">
+        <div class="spinner"></div>
+        <div class="modal-loading-text">Fetching patient #${id} + running AI analysis…</div>
+      </div>`;
+    openModal();
+
+    try {
+      // Try diabetes first (has AI endpoint)
+      const res = await fetch(`${API}/api/diabetes/readings/${id}`);
+      if (res.ok) {
+        const patient = await res.json();
+        renderPatientModal(patient, 'diabetes');
+        return;
+      }
+
+      // Try hypertension
+      const bpRes = await fetch(`${API}/api/hypertension/readings/${id}`);
+      if (bpRes.ok) {
+        const patient = await bpRes.json();
+        renderPatientModal(patient, 'hypertension');
+        return;
+      }
+
+      // Not found in API — check local data
+      const localD = diabetesPatients.find(p => p.id == id);
+      if (localD) { renderPatientModal(localD, 'diabetes'); return; }
+      const localBP = hypertensionPatients.find(p => p.id == id);
+      if (localBP) { renderPatientModal(localBP, 'hypertension'); return; }
+
+      // Nothing found
+      document.getElementById('modal-content').innerHTML = `
+        <div class="modal-error">
+          <div class="modal-error-icon">🔍</div>
+          <div class="modal-error-title">Patient Not Found</div>
+          <div class="modal-error-msg">No patient with ID #${id} exists in the database.<br>Check the ID and try again.</div>
+          <button class="btn btn-ghost" style="margin-top:8px" onclick="closeModal()">Close</button>
+        </div>`;
+
+    } catch(e) {
+      // Server offline — search local data only
+      const localD = diabetesPatients.find(p => p.id == id);
+      if (localD) { renderPatientModal(localD, 'diabetes'); return; }
+      const localBP = hypertensionPatients.find(p => p.id == id);
+      if (localBP) { renderPatientModal(localBP, 'hypertension'); return; }
+
+      document.getElementById('modal-content').innerHTML = `
+        <div class="modal-error">
+          <div class="modal-error-icon">⚠️</div>
+          <div class="modal-error-title">Server Unreachable</div>
+          <div class="modal-error-msg">Could not connect to the backend on port 8080.<br>Make sure the Spring Boot server is running.</div>
+          <button class="btn btn-ghost" style="margin-top:8px" onclick="closeModal()">Close</button>
+        </div>`;
+    }
+  }
+
+  function renderPatientModal(patient, type) {
+    const isD = type === 'diabetes';
+    const name = patient.patientName || 'Unknown';
+    const timestamp = patient.measuredAt
+      ? new Date(patient.measuredAt).toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' })
+      : '—';
+
+    let metricsHtml = '';
+    let aiHtml = '';
+    let chartHtml = '';
+
+    if (isD) {
+      const g = patient.glucoseLevel;
+      const [riskClass, riskLabel] = glucoseRisk(g);
+      const gc = glucoseClass(g);
+      const hba1c = patient.hba1c != null ? patient.hba1c.toFixed(1) + '%' : '—';
+
+      metricsHtml = `
+        <div class="modal-metrics">
+          <div class="metric-card">
+            <div class="metric-label">Glucose</div>
+            <div class="metric-value ${gc}">${g.toFixed(1)}</div>
+            <div class="metric-unit">mg/dL</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">HbA1c</div>
+            <div class="metric-value accent">${hba1c}</div>
+            <div class="metric-unit">glycated haemoglobin</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Risk Level</div>
+            <div class="metric-value ${riskClass}" style="font-size:1.1rem;margin-top:6px">${riskLabel}</div>
+            <div class="metric-unit">${g > 126 ? 'Above threshold' : g > 100 ? 'Pre-diabetic range' : 'Healthy range'}</div>
+          </div>
+        </div>`;
+
+      // Build a mini bar chart from all diabetes patients for context, highlighting this one
+      chartHtml = buildGlucoseChart(patient);
+
+      const prediction = patient.predictedNextValue != null
+        ? `<div class="modal-ai-prediction">
+            <div class="modal-ai-prediction-label">Next predicted value</div>
+            <div class="modal-ai-prediction-val">→ ${patient.predictedNextValue.toFixed(1)} mg/dL</div>
+           </div>` : '';
+
+      const insight = patient.riskAssessment && patient.riskAssessment !== 'Analyzing...'
+        ? patient.riskAssessment
+        : (g > 180 ? 'Critical — immediate clinical review required' :
+           g > 126 ? 'High — glucose above diabetic threshold' :
+           g > 100 ? 'Borderline — pre-diabetic range, monitor closely' :
+                     'Normal — glucose within healthy range');
+
+      aiHtml = `
+        <div class="modal-ai-panel">
+          <div class="modal-ai-label">AI Clinical Insight</div>
+          <div class="modal-ai-text">${insight}</div>
+          ${prediction}
+        </div>`;
+
+    } else {
+      // Hypertension
+      const [catClass, catLabel] = bpCategory(patient.systolic, patient.diastolic);
+      const pp = patient.systolic - patient.diastolic; // pulse pressure
+      const map = Math.round(patient.diastolic + (patient.systolic - patient.diastolic) / 3); // mean arterial pressure
+
+      metricsHtml = `
+        <div class="modal-metrics">
+          <div class="metric-card">
+            <div class="metric-label">Systolic</div>
+            <div class="metric-value danger">${patient.systolic}</div>
+            <div class="metric-unit">mmHg</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Diastolic</div>
+            <div class="metric-value warn">${patient.diastolic}</div>
+            <div class="metric-unit">mmHg</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Category</div>
+            <div class="metric-value ${catClass}" style="font-size:0.95rem;margin-top:6px">${catLabel}</div>
+            <div class="metric-unit">MAP ${map} mmHg · PP ${pp}</div>
+          </div>
+        </div>`;
+
+      chartHtml = buildBpChart(patient);
+
+      const bpInsight = patient.systolic >= 180 || patient.diastolic >= 120
+        ? 'Hypertensive crisis — seek emergency care immediately. Do not delay treatment.'
+        : patient.systolic >= 140 || patient.diastolic >= 90
+        ? 'Stage 2 hypertension — lifestyle changes and likely medication indicated. Schedule follow-up.'
+        : patient.systolic >= 130 || patient.diastolic >= 80
+        ? 'Stage 1 hypertension — clinician review recommended. Lifestyle modifications advised.'
+        : patient.systolic >= 120
+        ? 'Elevated blood pressure — monitor closely. Dietary sodium reduction recommended.'
+        : 'Blood pressure within normal range. Continue regular monitoring.';
+
+      aiHtml = `
+        <div class="modal-ai-panel">
+          <div class="modal-ai-label">Clinical Assessment</div>
+          <div class="modal-ai-text">${bpInsight}</div>
+          <div class="modal-ai-prediction">
+            <div class="modal-ai-prediction-label">Pulse pressure</div>
+            <div class="modal-ai-prediction-val">${pp} mmHg &nbsp;·&nbsp; MAP ${map} mmHg</div>
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-header">
+        <div class="modal-patient-info">
+          <div class="modal-avatar">${initials(name)}</div>
+          <div>
+            <div class="modal-patient-name">${name}</div>
+            <div class="modal-patient-meta">
+              <span>ID #${patient.id}</span>
+              <span>${isD ? 'Diabetes' : 'Hypertension'}</span>
+              <span>${timestamp}</span>
+            </div>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        ${metricsHtml}
+        ${chartHtml}
+        ${aiHtml}
+      </div>`;
+  }
+
+  function buildGlucoseChart(patient) {
+    // Show this patient's reading against normal ranges as a gauge-style bar chart
+    const g = patient.glucoseLevel;
+    const W = 620, H = 110, PAD = 40;
+    const MIN = 50, MAX = 250;
+    const toX = v => PAD + ((v - MIN) / (MAX - MIN)) * (W - PAD*2);
+
+    const zones = [
+      { from: 50, to: 100, color: 'rgba(104,211,145,0.15)', label: 'Normal' },
+      { from: 100, to: 126, color: 'rgba(246,173,85,0.15)', label: 'Borderline' },
+      { from: 126, to: 250, color: 'rgba(252,129,129,0.15)', label: 'High' },
+    ];
+
+    const zoneRects = zones.map(z => {
+      const x1 = toX(z.from), x2 = toX(Math.min(z.to, MAX));
+      return `<rect x="${x1}" y="20" width="${x2-x1}" height="50" fill="${z.color}" rx="3"/>`;
+    }).join('');
+
+    const zoneLabels = zones.map(z => {
+      const cx = (toX(z.from) + toX(Math.min(z.to, MAX))) / 2;
+      return `<text x="${cx}" y="84" text-anchor="middle" fill="rgba(107,122,148,0.8)" font-size="9" font-family="DM Mono,monospace">${z.label}</text>`;
+    }).join('');
+
+    const tickVals = [50, 70, 100, 126, 180, 250];
+    const ticks = tickVals.map(v => {
+      const x = toX(v);
+      return `<line x1="${x}" y1="70" x2="${x}" y2="74" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="${x}" y="95" text-anchor="middle" fill="rgba(107,122,148,0.6)" font-size="8.5" font-family="DM Mono,monospace">${v}</text>`;
+    }).join('');
+
+    const px = Math.max(PAD, Math.min(W - PAD, toX(g)));
+    const [riskClass] = glucoseRisk(g);
+    const markerColor = riskClass === 'safe' ? '#68d391' : riskClass === 'warn' ? '#f6ad55' : '#fc8181';
+
+    return `
+      <div class="chart-area">
+        <div class="chart-title">Glucose Reading — mg/dL Reference Chart</div>
+        <div class="chart-svg-wrap">
+          <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="${PAD}" y="20" width="${W-PAD*2}" height="50" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            ${zoneRects}
+            ${ticks}
+            ${zoneLabels}
+            <!-- Patient marker -->
+            <line x1="${px}" y1="16" x2="${px}" y2="74" stroke="${markerColor}" stroke-width="2" stroke-dasharray="3,2"/>
+            <circle cx="${px}" cy="45" r="7" fill="${markerColor}" opacity="0.2"/>
+            <circle cx="${px}" cy="45" r="4" fill="${markerColor}"/>
+            <text x="${px}" y="12" text-anchor="middle" fill="${markerColor}" font-size="10" font-family="DM Mono,monospace" font-weight="600">${g.toFixed(1)}</text>
+          </svg>
+        </div>
+      </div>`;
+  }
+
+  function buildBpChart(patient) {
+    const sys = patient.systolic, dia = patient.diastolic;
+    const W = 620, H = 120, PAD = 40;
+
+    // Two horizontal bar tracks — systolic and diastolic
+    const sMax = 200, dMax = 130;
+    const sW = W - PAD*2, dW = W - PAD*2;
+
+    const sBar = (sys / sMax) * sW;
+    const dBar = (dia / dMax) * dW;
+
+    const [catClass] = bpCategory(sys, dia);
+    const sColor = sys >= 140 ? '#fc8181' : sys >= 120 ? '#f6ad55' : '#68d391';
+    const dColor = dia >= 90 ? '#fc8181' : dia >= 80 ? '#f6ad55' : '#68d391';
+
+    return `
+      <div class="chart-area">
+        <div class="chart-title">Blood Pressure — Visual Reading</div>
+        <div style="display:flex;flex-direction:column;gap:18px;padding:4px 0">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+              <span style="font-size:0.72rem;font-family:'DM Mono',monospace;color:var(--text-muted)">SYSTOLIC</span>
+              <span style="font-size:0.8rem;font-family:'DM Mono',monospace;color:${sColor};font-weight:600">${sys} mmHg</span>
+            </div>
+            <div style="height:12px;background:var(--bg);border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="height:100%;width:${Math.min(100,(sys/sMax)*100)}%;background:${sColor};border-radius:6px;opacity:0.8;transition:width 0.6s ease"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.62rem;font-family:'DM Mono',monospace;color:var(--text-dim)">
+              <span>0</span><span>120 Normal</span><span>140 Stage 2</span><span>200</span>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:7px">
+              <span style="font-size:0.72rem;font-family:'DM Mono',monospace;color:var(--text-muted)">DIASTOLIC</span>
+              <span style="font-size:0.8rem;font-family:'DM Mono',monospace;color:${dColor};font-weight:600">${dia} mmHg</span>
+            </div>
+            <div style="height:12px;background:var(--bg);border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+              <div style="height:100%;width:${Math.min(100,(dia/dMax)*100)}%;background:${dColor};border-radius:6px;opacity:0.8;transition:width 0.6s ease"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.62rem;font-family:'DM Mono',monospace;color:var(--text-dim)">
+              <span>0</span><span>80 Normal</span><span>90 Stage 2</span><span>130</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // Allow clicking a row in the table to open that patient's analytics
+  function openPatientFromRow(id) {
+    document.getElementById('patient-id-search').value = id;
+    lookupPatient();
   }
 
   // ── Init ──────────────────────────────────────────────────────────────

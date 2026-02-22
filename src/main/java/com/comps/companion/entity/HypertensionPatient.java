@@ -30,6 +30,8 @@ public class HypertensionPatient {
 
     @PrePersist
     protected void onCreate() {
-        this.measuredAt = LocalDateTime.now();
+        if (this.measuredAt == null) {
+            this.measuredAt = LocalDateTime.now();
+        }
     }
 }
