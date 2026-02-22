@@ -10,19 +10,32 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiabetesPatient{
+public class DiabetesPatient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Double glucoseValue;
+    private String patientName;
 
-    
+    @Column(nullable = false)
+    private Double glucoseLevel;
+
     private Double hba1c;
 
     @Column(nullable = false)
     private LocalDateTime measuredAt;
 
+    
+    @PrePersist
+    protected void onCreate() {
+        this.measuredAt = LocalDateTime.now();
+    }
+    
+    @Column
+    private Double predictedNextValue;
+
+    @Column
+    private String riskAssessment;
 }

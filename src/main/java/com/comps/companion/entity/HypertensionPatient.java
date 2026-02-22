@@ -1,8 +1,7 @@
 package com.comps.companion.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.*; 
+import lombok.*;         
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,21 +10,26 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HypertensionPatient{
+public class HypertensionPatient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private int systolic;
+    private String patientName;
 
     @Column(nullable = false)
-    private int diastolic;
+    private Integer systolic;
+
+    @Column(nullable = false)
+    private Integer diastolic;
 
     @Column(nullable = false)
     private LocalDateTime measuredAt;
 
-    @Column(nullable = false)
-    private int heartRate;
+    @PrePersist
+    protected void onCreate() {
+        this.measuredAt = LocalDateTime.now();
+    }
 }
